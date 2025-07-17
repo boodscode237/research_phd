@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive PhD Proposal: Advancing Multilingual Medical NLP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: The application is designed as an interactive hub, moving away from a linear report structure. The main view provides a high-level summary and a central navigation panel to access four key thematic sections: "The Candidate," "Research Landscape," "Proposed Topics," and "Supervisor Alignment." This structure allows users to explore the proposal's components in any order, making the dense information more manageable and accessible. The "Topics" section is further organized with tabs for "Fundamental" and "Applied" research, using an interactive card-based layout where details are revealed on-click. This approach prioritizes user-driven exploration and reduces cognitive load by hiding complexity until it's requested, making the proposal easier to understand and evaluate. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Candidate's technical skills -> Goal: Inform/Organize -> Viz/Presentation: Interactive HTML/CSS grid with icons -> Interaction: Hover effects -> Justification: Visually breaks down a list of skills into a more engaging and scannable format. -> Library/Method: HTML/CSS with Tailwind.
+        - Report Info: Disparity in English vs. French NLP resources -> Goal: Compare/Inform -> Viz/Presentation: Horizontal Bar Chart -> Interaction: Tooltips on hover -> Justification: A simple chart provides a quick, powerful visual representation of the resource gap described qualitatively in the text. -> Library/Method: Chart.js.
+        - Report Info: 10 distinct PhD research topics -> Goal: Organize/Explore -> Viz/Presentation: Tabbed interface with interactive cards -> Interaction: Click tabs to filter, click cards to expand and show details -> Justification: Manages a large amount of detailed information by categorizing topics and revealing details on demand, preventing an overwhelmingly long page. -> Library/Method: Vanilla JS.
+        - Report Info: Comparative analysis of English vs. French NLP -> Goal: Compare/Analyze -> Viz/Presentation: Interactive HTML Table -> Interaction: Hover highlight on rows -> Justification: Improves readability and focus when comparing multiple points across the two languages. -> Library/Method: HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1f2937; }
+        .tab-active { border-color: #3b82f6; color: #3b82f6; background-color: #eff6ff; }
+        .topic-card { transition: all 0.3s ease; }
+        .topic-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        .topic-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+        .topic-content.open { max-height: 1500px; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 250px; max-height: 300px; }
+        @media (min-width: 768px) { .chart-container { height: 300px; max-height: 350px; } }
+        .nav-button.active { background-color: #3b82f6; color: white; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-2">Advancing Multilingual Medical NLP</h1>
+            <p class="text-lg md:text-xl text-gray-600">An Interactive PhD Research Proposal for Global Health Equity</p>
+        </header>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+            <p class="text-gray-700 leading-relaxed">This document outlines a PhD research proposal designed to leverage advanced Natural Language Processing (NLP) to address critical challenges in the medical domain, focusing on bridging linguistic gaps between English and French clinical data. The research is strategically aligned with the candidate's unique profile, which combines a strong foundation in Data Analysis and Machine Learning with native fluency in both languages. Explore the key pillars of this proposal using the interactive sections below.</p>
+        </div>
+
+        <nav class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10">
+            <button class="nav-button active text-sm md:text-base px-4 py-2 font-semibold text-gray-700 bg-white rounded-full shadow-md hover:bg-gray-100 transition" data-target="candidate">The Candidate</button>
+            <button class="nav-button text-sm md:text-base px-4 py-2 font-semibold text-gray-700 bg-white rounded-full shadow-md hover:bg-gray-100 transition" data-target="landscape">Research Landscape</button>
+            <button class="nav-button text-sm md:text-base px-4 py-2 font-semibold text-gray-700 bg-white rounded-full shadow-md hover:bg-gray-100 transition" data-target="topics">Proposed Topics</button>
+            <button class="nav-button text-sm md:text-base px-4 py-2 font-semibold text-gray-700 bg-white rounded-full shadow-md hover:bg-gray-100 transition" data-target="supervisor">Supervisor Alignment</button>
+        </nav>
+
+        <main>
+            <section id="candidate" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Candidate Profile: Брис Дональд Абодо Брис</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Summary & Multilingual Advantage</h3>
+                            <p class="text-gray-600 mb-4">A highly motivated Data Analyst with a strong academic background in AI and a passion for solving real-world problems. Over three years of experience in Data Analysis, Machine Learning, and NLP, with a proven ability to develop and deploy advanced models.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                                <p class="font-semibold text-blue-800">Unique Linguistic Asset</p>
+                                <p class="text-blue-700">Native-level proficiency (C2) in both French and English provides a rare advantage for cross-lingual research, enabling direct engagement with medical texts without reliance on potentially inaccurate translation tools. This is crucial for exploring under-represented Francophone health data, including contexts in Cameroon.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Core Technical Competencies</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-gray-50 rounded-lg">
+                                    <h4 class="font-semibold text-gray-800">NLP & Machine Learning</h4>
+                                    <p class="text-sm text-gray-600">BERT, GPT, RNN, LSTM, DistilBERT, FFN, Conv1D, Scikit-Learn, PyTorch, TensorFlow.</p>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg">
+                                    <h4 class="font-semibold text-gray-800">Data Analysis & Big Data</h4>
+                                    <p class="text-sm text-gray-600">Python (Pandas, NumPy), SQL, PySpark, Hadoop, ClickHouse, PostgreSQL.</p>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg">
+                                    <h4 class="font-semibold text-gray-800">Data Visualization</h4>
+                                    <p class="text-sm text-gray-600">Power BI, Tableau, Matplotlib, Seaborn.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="landscape" class="content-section hidden">
+                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">The Medical NLP Landscape</h2>
+                    <p class="text-center text-gray-600 mb-8">While English medical NLP is a mature field, French medical NLP presents significant challenges and research gaps, creating a critical opportunity for impactful work.</p>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Resource Disparity: English vs. French</h3>
+                    <div class="chart-container mb-12">
+                        <canvas id="resourceChart"></canvas>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Key Challenges & Opportunities: A Comparative View</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Category</th>
+                                    <th scope="col" class="px-6 py-3">English Context</th>
+                                    <th scope="col" class="px-6 py-3">French Context</th>
+                                    <th scope="col" class="px-6 py-3 rounded-tr-lg">Research Opportunity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium">Data Availability</td>
+                                    <td class="px-6 py-4">Extensive annotated datasets.</td>
+                                    <td class="px-6 py-4">Limited datasets, data scarcity.</td>
+                                    <td class="px-6 py-4 font-semibold text-blue-600">Develop low-resource NLP techniques (transfer learning, synthetic data).</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium">Model Architectures</td>
+                                    <td class="px-6 py-4">Robust LLMs with strong performance.</td>
+                                    <td class="px-6 py-4">Models constrained by long text; high cost to train.</td>
+                                    <td class="px-6 py-4 font-semibold text-blue-600">Research efficient, long-context multilingual models.</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium">Advanced Applications</td>
+                                    <td class="px-6 py-4">Wide range of clinical decision support systems.</td>
+                                    <td class="px-6 py-4">Nascent development, limited integration.</td>
+                                    <td class="px-6 py-4 font-semibold text-blue-600">Build multilingual CDSS and knowledge graphs.</td>
+                                </tr>
+                                <tr class="bg-white hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium">Ethical Considerations</td>
+                                    <td class="px-6 py-4">Growing awareness of bias (racial, gender).</td>
+                                    <td class="px-6 py-4">Significant risk of linguistic bias.</td>
+                                    <td class="px-6 py-4 font-semibold text-blue-600">Systematically detect and mitigate bias for health equity.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="topics" class="content-section hidden">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Proposed PhD Research Topics</h2>
+                    <p class="text-center text-gray-600 mb-8">The research is structured around two pillars: advancing core NLP methodologies (Fundamental Research) and solving specific, practical problems in healthcare (Applied Research).</p>
+                    
+                    <div class="mb-6 border-b border-gray-200">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="topic-tabs">
+                            <li class="mr-2">
+                                <button class="topic-tab inline-block p-4 border-b-2 rounded-t-lg tab-active" data-target="fundamental">Fundamental Research (5)</button>
+                            </li>
+                            <li class="mr-2">
+                                <button class="topic-tab inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-target="applied">Applied Research (5)</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="fundamental" class="topic-tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                    <div id="applied" class="topic-tab-content hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+            </section>
+
+            <section id="supervisor" class="content-section hidden">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Supervisor Alignment & Research Vision</h2>
+                     <div class="max-w-3xl mx-auto">
+                        <p class="text-gray-700 leading-relaxed mb-6">A strong synergy exists between the candidate's profile and the research interests of the prospective supervisor, Professor Valentin Malykh, creating significant potential for impactful collaboration.</p>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Professor Malykh's Expertise</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Artificial Intelligence</span>
+                                <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Natural Language Understanding</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Natural Language Processing</span>
+                                <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">Dialog Systems</span>
+                            </div>
+                            <p class="mt-4 text-gray-600">The supervisor's focus on NLU and Dialog Systems aligns perfectly with the proposed research. This synergy enables thesis topics that move beyond passive text analysis to develop interactive AI applications in healthcare, such as multilingual medical chatbots and intelligent clinical assistants, directly addressing real-world needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const researchTopics = [
+                {
+                    category: 'fundamental',
+                    title: 'Novel Architectures for Long-Context Multilingual Medical Language Models',
+                    problem: 'Standard NLP models like BERT are limited to short text sequences (512 tokens), hindering their use on long clinical documents common in French and English healthcare. This research will develop efficient new architectures to overcome this.',
+                    questions: ['How can sparse attention mechanisms process clinical documents of several thousand words?', 'What are the most effective pre-training strategies for these models?', 'How do they compare to traditional models on downstream tasks?'],
+                    methodology: 'Develop and pre-train long-sequence transformer models (e.g., Longformer) on large French and English clinical corpora. Evaluate on a suite of NLP tasks requiring long-context understanding.',
+                    impact: 'Overcomes current sequence length limitations, enabling more accurate and comprehensive NLP applications on full clinical documents.'
+                },
+                {
+                    category: 'fundamental',
+                    title: 'Advancing Cross-Lingual Transfer Learning for Low-Resource French Medical NLP',
+                    problem: 'French medical NLP lacks the large annotated datasets available for English. This research aims to develop effective transfer learning techniques to leverage English resources and bootstrap French NLP capabilities.',
+                    questions: ['What are the most effective transfer learning strategies (zero-shot, few-shot)?', 'How can linguistic differences be best addressed?', 'Can synthetic data generation reduce manual annotation needs?'],
+                    methodology: 'Compare various transfer learning techniques using English pre-trained models. Explore data augmentation to create synthetic French medical data. Evaluate on French medical benchmarks.',
+                    impact: 'Reduces reliance on costly manual annotation, accelerating the development of high-quality French medical NLP tools.'
+                },
+                {
+                    category: 'fundamental',
+                    title: 'Explainable AI (XAI) for Trustworthy Multilingual Medical NLP',
+                    problem: 'The "black box" nature of complex NLP models hinders trust and adoption by clinicians. This research will develop XAI techniques to make multilingual medical AI transparent and interpretable.',
+                    questions: ['What are the most effective XAI techniques for multilingual medical models?', 'How can XAI highlight the specific textual evidence driving a prediction?', 'How do clinicians perceive and use these explanations?'],
+                    methodology: 'Implement and adapt XAI methods (e.g., LIME, SHAP) for multilingual models. Conduct user studies with clinicians to evaluate the clarity, utility, and trustworthiness of the explanations.',
+                    impact: 'Fosters greater adoption of AI in medicine by building more trustworthy, accountable, and transparent systems.'
+                },
+                {
+                    category: 'fundamental',
+                    title: 'Automated Biomedical Knowledge Graph Construction and Cross-Lingual Alignment',
+                    problem: 'While English biomedical knowledge graphs (KGs) are well-developed, a significant gap exists for French. This research will create automated methods to build and align KGs from French and English texts.',
+                    questions: ['How can NLP be optimized to build medical KGs from text?', 'What are the best strategies for aligning French and English KGs?', 'How can the quality of these automated KGs be evaluated?'],
+                    methodology: 'Use state-of-the-art NLP to extract entities and relations from French and English medical literature. Develop automated pipelines to construct and align KGs. Evaluate KGs on downstream tasks.',
+                    impact: 'Creates valuable structured knowledge resources to power a wide range of medical AI applications in both French and English.'
+                },
+                {
+                    category: 'fundamental',
+                    title: 'Fundamental Bias Detection and Mitigation in Multilingual Medical Models',
+                    problem: 'AI models can perpetuate biases from training data, leading to health inequities. This research will focus on identifying and mitigating linguistic, racial, and gender biases in multilingual medical models.',
+                    questions: ['What biases are prevalent in French and English medical datasets?', 'What novel methods can effectively mitigate these biases?', 'How can the impact of bias mitigation be rigorously evaluated?'],
+                    methodology: 'Develop metrics to detect and quantify bias. Implement data-centric (rebalancing) and model-centric (adversarial training) mitigation techniques. Evaluate fairness improvements on clinical tasks.',
+                    impact: 'Promotes equitable and fair healthcare outcomes by providing frameworks for building responsible and trustworthy multilingual medical AI.'
+                },
+                {
+                    category: 'applied',
+                    title: 'Multilingual Clinical Decision Support System for Early Disease Detection',
+                    problem: 'Clinical Decision Support Systems (CDSS) often fail to use the rich information in unstructured clinical notes, especially across multiple languages. This project will build a CDSS that analyzes French and English notes for risk prediction.',
+                    questions: ['How can NLP effectively extract information from multilingual notes for a CDSS?', 'What are the best methods for combining structured EHR data with unstructured text?', 'How can the CDSS provide actionable and interpretable recommendations?'],
+                    methodology: 'Integrate de-identified French and English clinical notes. Use NLP to extract features and build predictive models. Build and evaluate a prototype CDSS for diagnostic accuracy and utility.',
+                    impact: 'A practical system to improve early disease detection and help providers make more informed and timely decisions.'
+                },
+                {
+                    category: 'applied',
+                    title: 'Automated Multilingual Clinical Text Summarization for Efficient Record Review',
+                    problem: 'Clinicians spend excessive time reviewing lengthy medical records. This project will create an automated system to summarize long clinical documents in both French and English, improving efficiency.',
+                    questions: ['How can NLP models be adapted for long-form clinical summarization?', 'How can summaries be guaranteed to retain all critical information?', 'How can clinicians evaluate the utility of these summaries?'],
+                    methodology: 'Fine-tune long-context transformer models for extractive and abstractive summarization. Develop techniques to ensure critical medical data is preserved. Evaluate with NLP metrics and human expert review.',
+                    impact: 'Significantly reduces manual review time, allowing clinicians to focus more on patient care, and improves access to critical information.'
+                },
+                {
+                    category: 'applied',
+                    title: 'Cross-Lingual Patient Sentiment and Experience Analysis from Healthcare Feedback',
+                    problem: 'Understanding patient experience from feedback on social media, forums, and surveys is key to improving care, but analyzing this data across French and English is challenging.',
+                    questions: ['How can sentiment models accurately capture patient sentiment from diverse multilingual texts?', 'How can trends be aggregated and visualized to identify patient concerns?', 'How can these insights be translated into practical recommendations?'],
+                    methodology: 'Collect and annotate multilingual patient feedback. Develop cross-lingual sentiment models using transfer learning. Build interactive dashboards to visualize trends and insights.',
+                    impact: 'Provides a holistic view of patient satisfaction, generating actionable insights to improve patient-centered care.'
+                },
+                {
+                    category: 'applied',
+                    title: 'Multilingual Clinical Trial Patient Matching and Recruitment Optimization',
+                    problem: 'Identifying eligible patients for clinical trials is a slow, manual process. This project will build an automated NLP system to match patients to trials using their records in both French and English.',
+                    questions: ['How can NLP automatically extract patient characteristics from multilingual EHRs?', 'How can patient profiles be accurately matched against complex trial criteria?', 'How can the system justify its matches to ensure fairness and transparency?'],
+                    methodology: 'Develop information extraction pipelines for French and English EHRs. Design algorithms to match patient data to trial criteria. Integrate XAI to provide explanations. Evaluate precision and recall.',
+                    impact: 'Dramatically accelerates clinical trial recruitment, leading to faster medical advancements, while ensuring a fair process.'
+                },
+                {
+                    category: 'applied',
+                    title: 'AI-Powered Multilingual Medical Chatbot for Patient Education and Triage',
+                    problem: 'Patients struggle to find reliable medical information. This project will create a multilingual chatbot to provide accurate information and preliminary triage advice in French and English, leveraging the supervisor\'s expertise in Dialog Systems.',
+                    questions: ['How can LLMs be safely fine-tuned for a medical chatbot?', 'How can responses be made accurate, understandable, and culturally appropriate?', 'How can the chatbot provide safe triage advice?'],
+                    methodology: 'Integrate an LLM with medical knowledge bases. Fine-tune on medical Q&A data. Implement robust safety and fact-checking protocols. Develop sophisticated dialogue management. Evaluate with user studies.',
+                    impact: 'Enhances patient access to reliable health information, improves patient empowerment, and reduces the workload on healthcare professionals.'
+                }
+            ];
+
+            const fundamentalContainer = document.getElementById('fundamental');
+            const appliedContainer = document.getElementById('applied');
+
+            researchTopics.forEach((topic, index) => {
+                const card = `
+                    <div class="topic-card bg-gray-50 p-5 rounded-xl border border-gray-200 cursor-pointer" data-index="${index}">
+                        <h4 class="font-bold text-md text-gray-800 mb-2">${topic.title}</h4>
+                        <p class="text-sm text-gray-600 mb-4">${topic.problem}</p>
+                        <div class="topic-content">
+                            <h5 class="font-semibold text-sm mt-4 mb-2">Key Research Questions:</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                ${topic.questions.map(q => `<li>${q}</li>`).join('')}
+                            </ul>
+                            <h5 class="font-semibold text-sm mt-4 mb-2">Methodology:</h5>
+                            <p class="text-sm text-gray-600">${topic.methodology}</p>
+                            <h5 class="font-semibold text-sm mt-4 mb-2">Expected Impact:</h5>
+                            <p class="text-sm text-gray-600">${topic.impact}</p>
+                        </div>
+                        <div class="text-right mt-2">
+                             <span class="text-xs font-semibold text-blue-600">Click to expand</span>
+                        </div>
+                    </div>
+                `;
+                if (topic.category === 'fundamental') {
+                    fundamentalContainer.innerHTML += card;
+                } else {
+                    appliedContainer.innerHTML += card;
+                }
+            });
+
+            const navButtons = document.querySelectorAll('.nav-button');
+            const sections = document.querySelectorAll('.content-section');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+                    
+                    sections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    document.getElementById(targetId).classList.remove('hidden');
+
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+
+            const topicTabs = document.querySelectorAll('.topic-tab');
+            const topicTabContents = document.querySelectorAll('.topic-tab-content');
+
+            topicTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.target;
+                    
+                    topicTabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    document.getElementById(targetId).classList.remove('hidden');
+                    
+                    topicTabs.forEach(t => t.classList.remove('tab-active'));
+                    tab.classList.add('tab-active');
+                });
+            });
+            
+            const topicCards = document.querySelectorAll('.topic-card');
+            topicCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const content = card.querySelector('.topic-content');
+                    content.classList.toggle('open');
+                });
+            });
+
+            const ctx = document.getElementById('resourceChart').getContext('2d');
+            const resourceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Annotated Datasets', 'Pre-trained Models', 'Research Benchmarks', 'Tooling'],
+                    datasets: [{
+                        label: 'English NLP Resources',
+                        data: [95, 90, 85, 92],
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'French NLP Resources',
+                        data: [25, 30, 20, 35],
+                        backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Illustrative Comparison of Available Medical NLP Resources'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += `Relative Score of ${context.raw}`;
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Relative Resource Availability Score (Illustrative)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
